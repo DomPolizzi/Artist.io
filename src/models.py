@@ -1,16 +1,18 @@
 import os
 from sqlalchemy import Column, String, Integer, Date
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from flask_moment import Moment
 import json
 
 
 database_path = os.environ.get('DATABASE_URL')
 if not database_path:
-    database_name = "agency"
+    database_name = "capstone"
     database_path = "postgres://{}/{}".format('localhost:5432', database_name)
 
 db = SQLAlchemy()
-
+moment = Moment()
 '''
 setup_db(app)
     binds a flask application and a SQLAlchemy service
@@ -21,15 +23,18 @@ def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
+    moment.app = app
     db.init_app(app)
+
+
+def db_drop_and_create_all():
     db.drop_all()
     db.create_all()
-
 
 class Artist(db.Model):
     __tablename__ = 'Artist'
 
-    id = Column(Integer().with_variant(Integer, "sqlite"), primary_key=True)
+    id = Column(Integer(), primary_key=True)
     name = Column(String())
     age = Column(Integer())
     style = Column(String())

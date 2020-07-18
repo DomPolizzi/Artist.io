@@ -11,8 +11,8 @@ from sqlalchemy import exc
 import json
 from flask_cors import CORS
 
-from .database.models import setup_db, Artist, Video
-from .auth.auth import AuthError, requires_auth, get_token_auth_header
+from models import setup_db, Artist, Video, db_drop_and_create_all
+from auth.auth import AuthError, requires_auth, get_token_auth_header
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -21,8 +21,9 @@ from .auth.auth import AuthError, requires_auth, get_token_auth_header
 
 def create_app(test_config=None):
     app = Flask(__name__)
+    app.url_map.strict_slashes = False
     setup_db(app)
-    CORS(app)
+    cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
     @app.after_request
     def after_request(response):
@@ -33,17 +34,11 @@ def create_app(test_config=None):
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
-    '''
-@TODO uncomment the following line to initialize the datbase
-!! NOTE THIS WILL DROP ALL RECORDS AND START YOUR DB FROM SCRATCH
-!! NOTE THIS MUST BE UNCOMMENTED ON FIRST RUN
-'''
     db_drop_and_create_all()
 
-# ===================
-# ROUTES
-# ===================
-
+    # ===================
+    # ROUTES
+    # ===================
 
     @app.route('/artists')
     def get_artists():
@@ -72,17 +67,10 @@ def create_app(test_config=None):
             'artists': "Test works, one video is found"
         })
 
-    return app
-    
-APP = create_app()
+    # =================================================================
+    #  Error Handlers
+    # =================================================================
 
-if __name__ == '__main__':
-    APP.run(host='0.0.0.0', port=8080, debug=True)
-
-# =================================================================
-#  Error Handlers
-# =================================================================
-'''
     @app.errorhandler(400)
     def bad_request(error):
         return jsonify({
@@ -136,4 +124,11 @@ if __name__ == '__main__':
         a_error = jsonify(auth.error)
         a_error.status_code = auth.status_code
         return a_error
-'''
+
+
+    return app
+
+APP = create_app()
+
+if __name__ == '__main__':
+    APP.run(host='0.0.0.0', port=8080, debug=True)
