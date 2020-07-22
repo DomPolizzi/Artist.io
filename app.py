@@ -23,7 +23,6 @@ def create_app(test_config=None):
     app = Flask(__name__)
     app.url_map.strict_slashes = False
     setup_db(app)
-    cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
     @app.after_request
     def after_request(response):
@@ -33,8 +32,9 @@ def create_app(test_config=None):
                              'GET,PUT,POST,DELETE,OPTIONS')
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
-
-   # db_drop_and_create_all()
+    
+    
+    db_drop_and_create_all()
 
     # ===================
     # ROUTES
