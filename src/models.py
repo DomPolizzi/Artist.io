@@ -1,5 +1,5 @@
 import os
-from sqlalchemy import Column, String, Integer, DateTime
+from sqlalchemy import Column, String, Integer, Date
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_moment import Moment
@@ -7,11 +7,11 @@ import json
 
 
 database_path = os.environ.get('DATABASE_URL')
-'''
+
 if not database_path:
     database_name = "capstone"
     database_path = "postgres://{}/{}".format('localhost:5432', database_name)
-'''
+
 
 db = SQLAlchemy()
 moment = Moment()
