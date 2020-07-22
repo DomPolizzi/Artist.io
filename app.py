@@ -11,7 +11,7 @@ from sqlalchemy import exc
 import json
 from flask_cors import CORS
 
-from src.models import setup_db, Artist, Video, db_drop_and_create_all
+from src.models import setup_db, Artist, Video
 from src.auth.auth import AuthError, requires_auth, get_token_auth_header
 
 #----------------------------------------------------------------------------#
@@ -34,7 +34,7 @@ def create_app(test_config=None):
         return response
     
     
-    db_drop_and_create_all()
+    #db_drop_and_create_all()
 
     # ===================
     # ROUTES
