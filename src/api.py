@@ -34,11 +34,15 @@ def create_app(test_config=None):
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
-    db_drop_and_create_all()
+   # db_drop_and_create_all()
 
     # ===================
     # ROUTES
     # ===================
+
+    @app.route('/')
+    def get_greeting():
+        return "Salutations Comrade. No front end created yet. see README.md"
 
     @app.route('/artists')
     def get_artists():
@@ -46,13 +50,39 @@ def create_app(test_config=None):
         artists = Artist.query.all()
 
         if len(artists) == 0:
-            print("test works, no artists found")
+            print("No Artists Found")
             abort(401)
 
         return jsonify({
             'success': True,
             'artists': "Test works, someone is found"
         })
+
+    @app.route('/add-artists', methods=['POST'])
+    def create_artist():
+
+        body = request.get_json()
+
+        artist_name = body.get('name')
+        artist_age = body.get('age')
+        artist_style = body.get('style')
+
+        try:
+            new_artist = Artist(
+                name=artist_name, age=artist_age, style=artist_style)
+            print('Post initialized')
+            new_artist.insert()
+
+        except Exception as e:
+            print(e)
+            print("something went wrong")
+            print(e.args)
+            abort(400)
+
+        return jsonify({
+            "success": True,
+            "artists": new_artist.format
+        }), 200
 
     @app.route('/videos')
     def get_videos():
@@ -125,8 +155,8 @@ def create_app(test_config=None):
         a_error.status_code = auth.status_code
         return a_error
 
-
     return app
+
 
 APP = create_app()
 

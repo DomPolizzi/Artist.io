@@ -1,5 +1,5 @@
 import os
-from sqlalchemy import Column, String, Integer, Date
+from sqlalchemy import Column, String, Integer, DateTime
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_moment import Moment
@@ -7,12 +7,15 @@ import json
 
 
 database_path = os.environ.get('DATABASE_URL')
+'''
 if not database_path:
     database_name = "capstone"
     database_path = "postgres://{}/{}".format('localhost:5432', database_name)
+'''
 
 db = SQLAlchemy()
 moment = Moment()
+
 '''
 setup_db(app)
     binds a flask application and a SQLAlchemy service
@@ -25,19 +28,24 @@ def setup_db(app, database_path=database_path):
     db.app = app
     moment.app = app
     db.init_app(app)
+    db.create_all()
 
 
 def db_drop_and_create_all():
     db.drop_all()
     db.create_all()
 
+
+
+#Models:
+
 class Artist(db.Model):
     __tablename__ = 'Artist'
 
-    id = Column(Integer(), primary_key=True)
-    name = Column(String())
-    age = Column(Integer())
-    style = Column(String())
+    id = db.Column(Integer(), primary_key=True)
+    name = db.Column(String(80))
+    age = db.Column(Integer())
+    style = db.Column(String(50))
 
     '''
     insert()
