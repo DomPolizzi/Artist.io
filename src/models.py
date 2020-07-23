@@ -6,7 +6,8 @@ from flask_moment import Moment
 import json
 
 
-database_path = os.environ.get('DATABASE_URL')
+#database_path = os.environ.get('DATABASE_URL')
+
 
 if not database_path:
     database_name = "capstone"
@@ -28,7 +29,7 @@ def setup_db(app, database_path=database_path):
     db.app = app
     moment.app = app
     db.init_app(app)
-    db.drop_all()
+    #db.drop_all()
     db.create_all()
 
 '''

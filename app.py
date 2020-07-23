@@ -44,6 +44,8 @@ def create_app(test_config=None):
     def get_greeting():
         return "Salutations Comrade. No front end created yet. see README.md"
 
+    # Artists
+
     @app.route('/artists')
     def get_artists():
 
@@ -58,14 +60,14 @@ def create_app(test_config=None):
             'artists': "Test works, someone is found"
         })
 
-    @app.route('/add-artists', methods=['POST'])
+    @app.route('/artists', methods=['POST'])
     def create_artist():
 
-        body = request.get_json()
+        body = request.json
 
-        artist_name = body.get('name')
-        artist_age = body.get('age')
-        artist_style = body.get('style')
+        artist_name = body['name']
+        artist_age = body['age']
+        artist_style = body['style']
 
         try:
             new_artist = Artist(
@@ -84,6 +86,67 @@ def create_app(test_config=None):
             "artists": new_artist.format
         }), 200
 
+    @app.route('/artists/<int:id>')
+    def get_artist_by_id(id):
+        try:
+            artists = Artist.query.get(id)
+            response = artists.format()
+        except:
+            abort(404)
+
+        return jsonify({
+            'success': True,
+            'artists': response
+        })
+
+    @app.route('/artists/<int:id>', methods=['PATCH'])
+    def edit_artist_by_id(id):
+        body = request.json
+        artist_id = id 
+        artist = Artist.query.filter_by(id = artist_id).one_or_none()
+
+        if artist is None:
+            abort(404)
+
+        if 'name' in body:
+            artist.name = body['artist']
+
+        if 'style' in body:
+            artist.style = body['style']
+
+        if 'age' in body:
+            artist.age = body['age']
+
+        try:
+            artist.insert()
+
+        except Exception:
+            abort(400)
+
+        return jsonify({
+        'success': True,
+        'artists': artist
+        })
+
+    @app.route('/artists/<int:id>', methods=['DELETE'])
+    def delete_artist_by_id():
+        artist = Artist.query.filter(Artist.id == id).one_or_none()
+
+        if not artist:
+            abort(404)
+
+        try:
+            artist.delete()
+        except:
+            abort(400)
+
+        return jsonify({
+            'success': True,
+            'delete': id
+        }), 200
+
+    # Videos
+
     @app.route('/videos')
     def get_videos():
         videos = Video.query.all()
@@ -96,6 +159,33 @@ def create_app(test_config=None):
             'success': True,
             'artists': "Test works, one video is found"
         })
+
+
+    @app.route('/add-videos', methods=['POST'])
+    def create_video():
+
+        body = request.get_json()
+
+        video_title = body.get('title')
+        video_date = body.get('date')
+        video_type = body.get('type')
+
+        try:
+            new_video = Video(
+                title=video_title, date=video_date, type=video_type)
+            print('Post initialized')
+            new_video.insert()
+
+        except Exception as e:
+            print(e)
+            print("something went wrong")
+            print(e.args)
+            abort(400)
+
+        return jsonify({
+            "success": True,
+            "artists": new_video.format
+        }), 200
 
     # =================================================================
     #  Error Handlers
