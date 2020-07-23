@@ -3,7 +3,7 @@ import unittest
 import json
 from flask_sqlalchemy import SQLAlchemy
 
-from app import app
+from app import APP
 from models import setup_db, Artist, Video
 
 
