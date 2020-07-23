@@ -6,7 +6,7 @@ from flask_moment import Moment
 import json
 
 
-#database_path = os.environ.get('DATABASE_URL')
+database_path = os.environ.get('DATABASE_URL')
 
 
 if not database_path:
@@ -45,10 +45,10 @@ def db_drop_and_create_all():
 class Artist(db.Model):
     __tablename__ = 'Artist'
 
-    id = db.Column(Integer(), primary_key=True)
-    name = db.Column(String(80))
-    age = db.Column(Integer())
-    style = db.Column(String(50))
+    id = Column(Integer(), primary_key=True)
+    name = Column(String(80))
+    age = Column(Integer())
+    style = Column(String(50))
 
     '''
     insert()
@@ -84,10 +84,10 @@ class Artist(db.Model):
 
     def format(self):
         return {
-            'id': self.id,
-            'name': self.name,
-            'age': self.age,
-            'style': self.style
+            "id": self.id,
+            "name": self.name,
+            "age": self.age,
+            "style": self.style
         }
 
 

@@ -11,8 +11,8 @@ from sqlalchemy import exc
 import json
 from flask_cors import CORS
 
-from src.models import setup_db, Artist, Video
-from src.auth.auth import AuthError, requires_auth, get_token_auth_header
+from models import setup_db, Artist, Video
+from auth.auth import AuthError, requires_auth, get_token_auth_header
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -23,6 +23,7 @@ def create_app(test_config=None):
     app = Flask(__name__)
     app.url_map.strict_slashes = False
     setup_db(app)
+    CORS(app)
 
     @app.after_request
     def after_request(response):
@@ -57,14 +58,15 @@ def create_app(test_config=None):
 
         return jsonify({
             'success': True,
-            'artists': "Test works, someone is found"
+            'artists': [artist.format() for artist in artists]
         })
 
     @app.route('/artists', methods=['POST'])
     def create_artist():
 
         body = request.json
-
+        print("error here:")
+        print(body)
         artist_name = body['name']
         artist_age = body['age']
         artist_style = body['style']
@@ -83,7 +85,7 @@ def create_app(test_config=None):
 
         return jsonify({
             "success": True,
-            "artists": new_artist.format
+            "artists": new_artist.format()
         }), 200
 
     @app.route('/artists/<int:id>')
@@ -109,7 +111,7 @@ def create_app(test_config=None):
             abort(404)
 
         if 'name' in body:
-            artist.name = body['artist']
+            artist.name = body['name']
 
         if 'style' in body:
             artist.style = body['style']
@@ -125,12 +127,12 @@ def create_app(test_config=None):
 
         return jsonify({
         'success': True,
-        'artists': artist
+        'artists': artist.format()
         })
 
     @app.route('/artists/<int:id>', methods=['DELETE'])
-    def delete_artist_by_id():
-        artist = Artist.query.filter(Artist.id == id).one_or_none()
+    def delete_artist_by_id(id):
+        artist = Artist.query.filter_by(id).one_or_none()
 
         if not artist:
             abort(404)
