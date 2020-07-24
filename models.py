@@ -1,8 +1,9 @@
 import os
-from sqlalchemy import Column, String, Integer, Date
+import datetime
+from sqlalchemy import Column, String, Integer, DateTime
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_moment import Moment
+from sqlalchemy.ext.declarative import declarative_base
 import json
 
 
@@ -15,7 +16,6 @@ if not database_path:
 
 
 db = SQLAlchemy()
-moment = Moment()
 
 '''
 setup_db(app)
@@ -27,7 +27,6 @@ def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
-    moment.app = app
     db.init_app(app)
     #db.drop_all()
     db.create_all()
@@ -96,9 +95,9 @@ class Video(db.Model):
 
     id = Column(Integer(), primary_key=True)
     title = Column(String())
-    date = Column(Date, index=True)
+    date = Column(DateTime, default=datetime.datetime.utcnow)
     # Video type, Stream or Saved Video
-    type = Column(Integer())
+    type = Column(String())
     # add later
     # artist =
 
@@ -115,6 +114,15 @@ class Video(db.Model):
 
     def update(self):
         db.session.commit()
+
+    def format(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "date": self.date,
+            "type": self.type
+        }
+
 
     def __repr__(self):
         return json.dumps(self.short())
