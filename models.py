@@ -1,6 +1,7 @@
 import os
 import datetime
-from sqlalchemy import Column, String, Integer, DateTime
+from sqlalchemy import Column, String, Integer, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from sqlalchemy.ext.declarative import declarative_base
@@ -48,6 +49,7 @@ class Artist(db.Model):
     name = Column(String(80))
     age = Column(Integer())
     style = Column(String(50))
+    videos_rel = relationship("Video", back_populates="artist")
 
     '''
     insert()
@@ -99,10 +101,8 @@ class Video(db.Model):
     # Video type, Stream or Saved Video
     type = Column(String())
     # add later
-    # artist =
-
-    # save to call later?
-    #qry = DBSession.query(User).filter(User.date.between('1985-01-17', '1988-01-17'))
+    artist_id = Column(Integer, ForeignKey('Artist.id'))
+    artist = relationship("Artist", back_populates="artist")
 
     def insert(self):
         db.session.add(self)
