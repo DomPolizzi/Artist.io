@@ -49,7 +49,7 @@ class Artist(db.Model):
     name = Column(String(80))
     age = Column(Integer())
     style = Column(String(50))
-    videos_rel = relationship("Video", back_populates="artist")
+    videos_rel = relationship("Video")
 
     '''
     insert()
@@ -100,9 +100,8 @@ class Video(db.Model):
     date = Column(DateTime, default=datetime.datetime.utcnow)
     # Video type, Stream or Saved Video
     type = Column(String())
-    # add later
     artist_id = Column(Integer, ForeignKey('Artist.id'))
-    artist = relationship("Artist", back_populates="artist")
+
 
     def insert(self):
         db.session.add(self)

@@ -186,6 +186,7 @@ def create_app(test_config=None):
             print('Post initialized')
             new_video.insert()
 
+
         except Exception as e:
             print(e)
             print("something went wrong")
@@ -237,8 +238,9 @@ def create_app(test_config=None):
         })
 
     @app.route('/videos/<int:id>', methods=['DELETE'])
-    def delete_artist_by_id(id):
-        video = Video.query.filter_by(id).one_or_none()
+    def delete_video_by_id(id):
+        video_id = id
+        video = Video.query.filter_by(id=video_id).one_or_none()
 
         if not video:
             abort(404)
