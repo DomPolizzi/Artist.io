@@ -33,9 +33,8 @@ def create_app(test_config=None):
                              'GET,PUT,POST,DELETE,OPTIONS')
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
-    
-    
-    #db_drop_and_create_all()
+
+    # db_drop_and_create_all()
 
     # ===================
     # ROUTES
@@ -45,7 +44,9 @@ def create_app(test_config=None):
     def get_greeting():
         return "Salutations Comrade. No front end created yet. see README.md"
 
-    # Artists
+    # =============
+    # Artists :
+    # =============
 
     @app.route('/artists')
     def get_artists():
@@ -61,12 +62,13 @@ def create_app(test_config=None):
             'artists': [artist.format() for artist in artists]
         })
 
+    # Post New Artist
+
     @app.route('/artists', methods=['POST'])
     def create_artist():
 
         body = request.json
-        print("error here:")
-        print(body)
+
         artist_name = body['name']
         artist_age = body['age']
         artist_style = body['style']
@@ -88,6 +90,8 @@ def create_app(test_config=None):
             "artists": new_artist.format()
         }), 200
 
+    # See single Artist info
+
     @app.route('/artists/<int:id>')
     def get_artist_by_id(id):
         try:
@@ -101,11 +105,13 @@ def create_app(test_config=None):
             'artists': response
         })
 
+    # Update single Artist info
+
     @app.route('/artists/<int:id>', methods=['PATCH'])
     def edit_artist_by_id(id):
         body = request.json
-        artist_id = id 
-        artist = Artist.query.filter_by(id = artist_id).one_or_none()
+        artist_id = id
+        artist = Artist.query.filter_by(id=artist_id).one_or_none()
 
         if artist is None:
             abort(404)
@@ -126,9 +132,11 @@ def create_app(test_config=None):
             abort(400)
 
         return jsonify({
-        'success': True,
-        'artists': artist.format()
+            'success': True,
+            'artists': artist.format()
         })
+
+    # Delete single Artist by ID
 
     @app.route('/artists/<int:id>', methods=['DELETE'])
     def delete_artist_by_id(id):
@@ -147,36 +155,37 @@ def create_app(test_config=None):
             'delete': id
         }), 200
 
-    # Videos
+    # =============
+    # Videos :
+    # =============
 
     @app.route('/videos')
     def get_videos():
         videos = Video.query.all()
 
         if len(videos) == 0:
-            print("test works, no videos found")
+            print("No Videos Found")
             abort(401)
 
         return jsonify({
             'success': True,
-            'artists': "Test works, one video is found"
+            'videos': [video.format() for video in videos]
         })
-
 
     @app.route('/add-videos', methods=['POST'])
     def create_video():
 
-        body = request.get_json()
+        body = request.json
 
-        video_title = body.get('title')
-        video_date = body.get('date')
-        video_type = body.get('type')
+        video_title = body['title']
+        video_type = body['type']
 
         try:
             new_video = Video(
-                title=video_title, date=video_date, type=video_type)
+                title=video_title, type=video_type)
             print('Post initialized')
             new_video.insert()
+
 
         except Exception as e:
             print(e)
@@ -186,7 +195,64 @@ def create_app(test_config=None):
 
         return jsonify({
             "success": True,
-            "artists": new_video.format
+            "videos": new_video.format()
+        }), 200
+
+    @app.route('/videos/<int:id>')
+    def get_video_by_id(id):
+        try:
+            videos = Video.query.get(id)
+            response = videos.format()
+        except:
+            abort(404)
+
+        return jsonify({
+            'success': True,
+            'videos': response
+        })
+
+    @app.route('/videos/<int:id>', methods=['PATCH'])
+    def edit_video_by_id(id):
+        body = request.json
+        video_id = id
+        video = Video.query.filter_by(id=video_id).one_or_none()
+
+        if video is None:
+            abort(404)
+
+        if 'title' in body:
+            video.title = body['title']
+
+        if 'type' in body:
+            video.type = body['type']
+
+        try:
+            video.insert()
+
+        except Exception:
+            abort(400)
+
+        return jsonify({
+            'success': True,
+            'video': video.format()
+        })
+
+    @app.route('/videos/<int:id>', methods=['DELETE'])
+    def delete_video_by_id(id):
+        video_id = id
+        video = Video.query.filter_by(id=video_id).one_or_none()
+
+        if not video:
+            abort(404)
+
+        try:
+            video.delete()
+        except:
+            abort(400)
+
+        return jsonify({
+            'success': True,
+            'delete': id
         }), 200
 
     # =================================================================
