@@ -8,7 +8,7 @@ from sqlalchemy.ext.declarative import declarative_base
 import json
 
 
-database_path = os.environ.get('HEROKU_POSTGRESQL_ROSE_URL')
+database_path = os.environ.get('DATABASE_URL')
 
 
 if not database_path:
