@@ -12,7 +12,7 @@ import json
 from flask_cors import CORS
 
 from models import setup_db, Artist, Video
-from auth.auth import AuthError, requires_auth, get_token_auth_header
+from auth.auth import *
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -108,7 +108,9 @@ def create_app(test_config=None):
     # Update single Artist info
 
     @app.route('/artists/<int:id>', methods=['PATCH'])
-    def edit_artist_by_id(id):
+    @requires_auth('patch:artist')
+    def edit_artist_by_id(payload, id):
+        
         body = request.json
         artist_id = id
         artist = Artist.query.filter_by(id=artist_id).one_or_none()
@@ -139,6 +141,7 @@ def create_app(test_config=None):
     # Delete single Artist by ID
 
     @app.route('/artists/<int:id>', methods=['DELETE'])
+    @requires_auth('delete:artist')
     def delete_artist_by_id(id):
         artist = Artist.query.filter_by(id).one_or_none()
 
@@ -173,7 +176,8 @@ def create_app(test_config=None):
         })
 
     @app.route('/add-videos', methods=['POST'])
-    def create_video():
+    @requires_auth('post:video')
+    def create_video(payload):
 
         body = request.json
 
@@ -212,7 +216,8 @@ def create_app(test_config=None):
         })
 
     @app.route('/videos/<int:id>', methods=['PATCH'])
-    def edit_video_by_id(id):
+    @requires_auth('patch:video')
+    def edit_video_by_id(payload, id):
         body = request.json
         video_id = id
         video = Video.query.filter_by(id=video_id).one_or_none()
@@ -238,7 +243,8 @@ def create_app(test_config=None):
         })
 
     @app.route('/videos/<int:id>', methods=['DELETE'])
-    def delete_video_by_id(id):
+    @requires_auth('delete:video')
+    def delete_video_by_id(payload, id):
         video_id = id
         video = Video.query.filter_by(id=video_id).one_or_none()
 
