@@ -54,6 +54,7 @@ def create_app(test_config=None):
         artists = Artist.query.all()
 
         if len(artists) == 0:
+            return "No artists are currently availble, please try adding one!"
             print("No Artists Found")
             abort(401)
 
