@@ -10,7 +10,7 @@ Nowadays, streaming is all the rage. IOntroducing a platform for Artists to stre
 ## Getting Started
 
 ### Installing Dependencies
-
+```
 pip install -r requirements.txt
 ```
 
