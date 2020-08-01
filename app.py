@@ -12,7 +12,7 @@ import json
 from flask_cors import CORS
 
 from models import setup_db, Artist, Video
-from auth.auth import AuthError, requires_auth, get_token_auth_header
+from auth.auth import *
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -263,6 +263,21 @@ def create_app(test_config=None):
             'success': True,
             'delete': id
         }), 200
+
+    @app.route("/authorization/url", methods=["GET"])
+    def generate_auth_url():
+        print(os.environ)
+        url = f'https://{AUTH0_DOMAIN}/authorize' \
+            f'?audience={API_AUDIENCE}' \
+            f'&response_type=token&client_id=' \
+            f'{AUTH0_CLIENT_ID}&redirect_uri=' \
+            f'{AUTH0_CALLBACK_URL}'
+        
+        return jsonify({
+            'url': url
+        })
+
+
 
     # =================================================================
     #  Error Handlers
