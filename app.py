@@ -12,7 +12,7 @@ import json
 from flask_cors import CORS
 
 from models import setup_db, Artist, Video
-from auth.auth import *
+from auth.auth import AuthError, requires_auth, get_token_auth_header
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -113,6 +113,7 @@ def create_app(test_config=None):
     def edit_artist_by_id(payload, id):
         
         body = request.json
+        print(payload)
         artist_id = id
         artist = Artist.query.filter_by(id=artist_id).one_or_none()
 
@@ -168,6 +169,7 @@ def create_app(test_config=None):
         videos = Video.query.all()
 
         if len(videos) == 0:
+            return "No Videos are currently availble, please try adding one!"
             print("No Videos Found")
             abort(401)
 
