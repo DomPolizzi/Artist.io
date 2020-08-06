@@ -2,7 +2,7 @@ import os
 import unittest
 import json
 from sqlalchemy import DateTime
-from datetime import datetime
+from datetime import datetime, date
 from flask_sqlalchemy import SQLAlchemy
 
 from app import APP
@@ -19,7 +19,7 @@ class ArtistIoTest(unittest.TestCase):
 
         # Test database name
         self.database_name = "capstonetest"
-        self.database_path = "postgresql://postgres:viktor@localhost:5432/" + self.database_name
+        self.database_path = "postgresql://postgres:ravyn@localhost:5432/" + self.database_name
         setup_db(self.app, self.database_path)
 
         # binds the app to the current context
@@ -60,8 +60,7 @@ class ArtistIoTest(unittest.TestCase):
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
-        self.assertEqual(data['artists'], {'name': 'Charlie Brown', 'id': 1, 'age': '25',
-                                          'style': 'musician'})
+        self.assertEqual(data['artists'], {'name': 'Charlie Brown', 'id': 14, 'age': 25, 'style': 'musician'})
 
     def test_get_artist(self):
         res = self.client().get('/artists')
@@ -95,6 +94,7 @@ class ArtistIoTest(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertEqual(data['artists'], output)
+        
 
     def test_post_video_w_token(self):
         res = self.client().post('/add-videos',
@@ -102,8 +102,26 @@ class ArtistIoTest(unittest.TestCase):
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
-        self.assertEqual(data['videos'], {'title': 'Jazz Theory', 'id': 3,
-                                          'type': 'Stream'})
+        self.assertEqual(data['videos'], {'title': 'Jazz Theory', 'id': 1,
+                                          'type': 'Stream', 'date' : date })
+
+'''    
+    def test_delete_artist_w_token(self):
+
+    def test_delete_artist_wo_token(self):
+
+    def test_delete_video_w_token(self):
+
+    def test_delete_video_wo_token(self):
+
+    def test_patch_artist_w_token(self):
+    
+    def test_patch_artist_wo_token(self):
+
+    def test_patch_patch_w_token(self):
+    
+    def test_patch_artist_wo_token(self):
+'''
 
 if __name__ == "__main__":
     unittest.main()
