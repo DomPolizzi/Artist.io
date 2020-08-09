@@ -121,7 +121,10 @@ class Video(db.Model):
             "date": self.date,
             "type": self.type
         }
-
+    
+    def get_date():
+        date_to_use = datetime.datetime.utcnow()
+        return date_to_use
 
     def __repr__(self):
         return json.dumps(self.short())
