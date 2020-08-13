@@ -76,21 +76,185 @@ flask run --reload
 
   ## endpoints
 
-- ('/') Default, nothing special
+('/') Default, nothing special
 
-- ('/artists') Artist List in JSON, you can also post no token needed
+GET '/artists'
+- Fetches a JSON object with a list of artists in the database.
+- Returns: Artists
 
-- ('/artists/<int:id>') single Artist View. You can Patch and Delete with The Mod or Artist Token 
+```
+{
+  "artists": [
+    {
+      "age": 25,
+      "id": 1,
+      "name": "Krishna Rungta",
+      "style": "Musician"
+    },
+    {
+      "age": 99,
+      "id": 4,
+      "name": "Micheal Jackson",
+      "style": "Performer"
+    },
+    {
+      "age": 29,
+      "id": 2,
+      "name": "Sonic",
+      "style": "Musician"
+    },
+    {
+      "age": 29,
+      "id": 3,
+      "name": "Sonic",
+      "style": "Musician"
+    },
+    {
+      "age": 99,
+      "id": 5,
+      "name": "Micheal Jackson",
+      "style": "Performer"
+    }
+  ],
+  "success": true
+}
+```
 
-- ('/videos') Videos ( if any availble) return in a JSON List
+GET '/videos'
+- Fetches a JSON object with a list of videos in the database.
+- Returns: videos
 
-- ('/add-videos') Post Videos if Artist bearer token exists
+```
+{
+  "success": true,
+  "videos": [
+    {
+      "date": "Thu, 13 Aug 2020 03:01:22 GMT",
+      "id": 1,
+      "title": "Narwhals",
+      "type": "Video"
+    },
+    {
+      "date": "Thu, 13 Aug 2020 03:01:48 GMT",
+      "id": 2,
+      "title": "Jordan the Magician gets laid",
+      "type": "Documentary"
+    },
+    {
+      "date": "Thu, 13 Aug 2020 03:02:07 GMT",
+      "id": 3,
+      "title": "Applegate in Overwatch",
+      "type": "Livestream"
+    }
+  ]
+}
+```
 
-- ('/videos/<int:id>') single Video View. You can Patch and Delete with The Mod or Artist Token 
+POST '/artists'
+- Posts a new artist to the database, including the name, age, and style.
+- Request Arguments: Requires the arguments: name, age, and style.
+- Returns: A artist object with the name, age, and style.
+```
+{
+    "artists": {
+        "age": 69,
+        "id": 6,
+        "name": "Leroy Jenkens",
+        "style": "Chef"
+    },
+    "success": true
+}
+```
 
-- ('/authorization/url') login page for the Auth0 domain ( how to aquire tokens)
+POST '/add-videos'
+- Posts a new video to the database, including the title, type, and a Timestamp which is automatically assigned upon insertion. Requires Mod or Artist Token
+- Request Arguments: Requires the arguments: title and type.
+- Returns: A video object with the title, type, and time created.
 
+```
+{
+    "success": true,
+    "videos": {
+        "date": "Thu, 13 Aug 2020 03:02:07 GMT",
+        "id": 3,
+        "title": "Applegate in Overwatch",
+        "type": "Livestream"
+    }
+}
+```
 
-##TESTING
+PATCH '/artists/<int:artist_id>'
+- Patches an existing artist in the database.
+- Request arguments: artist ID, and the key to be updated passed into the body as a JSON object. For example, to update the name for '/artists/3'
+- Requires a Bearer Token from Mod or Artist
+```
+{
+    "name": "Shadow"
+}
+```
+- Returns: An Artist object with all details of the specified Artist.
+```
+{
+    "artists": {
+        "age": 29,
+        "id": 3,
+        "name": "Shadow",
+        "style": "Musician"
+    },
+    "success": true
+}
+```
+PATCH '/videos/<int:video_id>'
+- Patches an existing video in the database.
+- Request arguments: video ID, and the key to be updated passed into the body as a JSON object. For example, to update the title and type for '/videos/2'
+- Requires a Bearer Token from Mod or Artist
+```
+{
+    "title": "BabyShark (Singalong)",
+    "type": "Video"
+}
+```
+- Returns: An Artist object with all details of the specified Artist.
+```
+{
+    "success": true,
+    "video": {
+        "date": "Thu, 13 Aug 2020 03:01:48 GMT",
+        "id": 2,
+        "title": "BabyShark (Singalong)",
+        "type": "Video"
+    }
+}
+```
+DELETE '/artists/<int:artist_id>'
+- Deletes an artist in the database via the DELETE method and using the artist id.
+- Request argument: Artist id, included as a parameter following a forward slash (/).
+- Returns: ID for the deleted Artist and status code of the request.
+- Requires a Mod Bearer token
+```
+{
+    "delete": 3,
+    "success": true
+}
+```
 
-All tests have been executed in postman, see the .json attached
+DELETE '/videos/<int:video_id>'
+- Deletes an video in the database via the DELETE method and using the video id.
+- Request argument: Video id, included as a parameter following a forward slash (/).
+- Returns: ID for the deleted Video and status code of the request.
+- Requires a Mod Bearer token, Artist is not allowed
+```
+{
+    "delete": 3,
+    "success": true
+}
+```
+
+## TESTING
+
+To run the unittests
+```
+createdb capstonetest
+python3 test_app.py
+```
+All tests have been executed in postman aswell, see the .json attached
