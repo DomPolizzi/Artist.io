@@ -144,8 +144,8 @@ def create_app(test_config=None):
 
     @app.route('/artists/<int:id>', methods=['DELETE'])
     @requires_auth('delete:artist')
-    def delete_artist_by_id(id):
-        artist = Artist.query.filter_by(id).one_or_none()
+    def delete_artist_by_id(payload, id):
+        artist = Artist.query.filter_by(id=id).one_or_none()
 
         if not artist:
             abort(404)

@@ -31,8 +31,8 @@ class ArtistIoTest(unittest.TestCase):
             # create all tables
             self.db.create_all()
 
-        self.artist = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkVKNHZEUnhBakREWDhTZkxrei15VCJ9.eyJpc3MiOiJodHRwczovL2Rldi01NmQzY3RuNy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWYxY2I1OTlkYThmZmEwMDNkMWY4NWQ1IiwiYXVkIjoiY2FwcGVyIiwiaWF0IjoxNTk2NTIwNjU5LCJleHAiOjE1OTY2MDcwNTksImF6cCI6IlJCQ3JuNlZTRzUzYmN4bmdadlhEYnZOWUR3YmNHbVhRIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJwYXRjaDphcnRpc3QiLCJwYXRjaDp2aWRlbyIsInBvc3Q6dmlkZW8iXX0.skac2WqBAg1noVRzvhhp3EA_8LS0_o_HTYXkxGGahNgRM4a8Bggws2cQGw5Ch-iDzW0q0bXT2CWw4yy7ylYm7-9rwqZYBfdKzPhwNV8tCGpb7IrAwyeQMPJehAJSPhPwOoeEPtwIGldz-f0AW0CPbX-Y4-LYUGwD2s4-KcXg9PZ2IpSB3QzV0iAiHQV5Lg0mtPXJQ0s7fDxVAaSZ1_3B2VzHV_qVZYpzOnHoWjIkS_fQuamvxoybDBj_H9S-pt0DeeFDzK46VKCCRZfLci2ImDvCEbNnR53DiCDg1W4Og_IJ0Hnc0B3tBFPNvrQULqD3h6mLFG88YI-Ikedbzl7dUw'
-        self.mod = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkVKNHZEUnhBakREWDhTZkxrei15VCJ9.eyJpc3MiOiJodHRwczovL2Rldi01NmQzY3RuNy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWYxYzlmMzBkYThmZmEwMDNkMWY3NjQ1IiwiYXVkIjoiY2FwcGVyIiwiaWF0IjoxNTk3MDE1NzA5LCJleHAiOjE1OTcxMDIxMDksImF6cCI6IlJCQ3JuNlZTRzUzYmN4bmdadlhEYnZOWUR3YmNHbVhRIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJkZWxldGU6YXJ0aXN0IiwiZGVsZXRlOnZpZGVvIiwicGF0Y2g6YXJ0aXN0IiwicGF0Y2g6dmlkZW8iLCJwb3N0OnZpZGVvIl19.TGpK4vKI3gQKF87swStVp4oF7oGlqccAF1Mh5zoRWERCJdvqHbdvHIFD_Zn4Ikp1fH25d-3UzZLADud8sKTfc8F08FdtDNsqnKMnQOx764KezmDXlhfj9jTQeZVTPFyTVMVe6pQWUAhvKMvgSPL7_-gSW3kiXlSSHbMpDfRWlPLVjafU6E7ZC6_0XL4NOvV_NmjN3XOZPzo_ksGQcEsHECCgXpTAxsd5j0_pMRIszLWoyEg-9zmglNmWID2nr7IqVeTLoPkp4ckvJiD0OSRrX1F8iOBKj6Vr6iSVOvj8JbLzlBpx2D5UOQxDGfY4kzAmps0j-2BZQDbKm68pW58ngw'
+        self.artist = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkVKNHZEUnhBakREWDhTZkxrei15VCJ9.eyJpc3MiOiJodHRwczovL2Rldi01NmQzY3RuNy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWYxY2I1OTlkYThmZmEwMDNkMWY4NWQ1IiwiYXVkIjoiY2FwcGVyIiwiaWF0IjoxNTk3Mjg2NTk2LCJleHAiOjE1OTczNzI5OTYsImF6cCI6IlJCQ3JuNlZTRzUzYmN4bmdadlhEYnZOWUR3YmNHbVhRIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJwYXRjaDphcnRpc3QiLCJwYXRjaDp2aWRlbyIsInBvc3Q6dmlkZW8iXX0.CeMcgkgQJWHshSVw8U6ST6485Rbh95Q4F0xTn8mRYA7SlZaZfIK5Ge2Mj8TmZwx_aIo65xGe0Lokm_XcI2wAVZ_rqJ7hi7-PJcZYV13XATL7_74PH6GzYXDoD5RQ5zB1SGG3rSB4S7nq8rya6xM5hjgsEJXx5U-_4CrBLKfQLFUftufpeKQ94eDGY7-8chvMetjASSe2If6PWvlYqbuwGgq7pt9SYWmmA1vukn6Rf0EVL0R_OJsfc98NyF16yVWXfKX_Nte1zg_rogtMJ1PavRU2Ql4Z3ulaS5znjhVui3CYFUYbUshDe2Aj3jmjjXrIbCPDV0xJ0PIpRA8q2vSi1g'
+        self.mod = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkVKNHZEUnhBakREWDhTZkxrei15VCJ9.eyJpc3MiOiJodHRwczovL2Rldi01NmQzY3RuNy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWYxYzlmMzBkYThmZmEwMDNkMWY3NjQ1IiwiYXVkIjoiY2FwcGVyIiwiaWF0IjoxNTk3Mjc1NzU5LCJleHAiOjE1OTczNjIxNTksImF6cCI6IlJCQ3JuNlZTRzUzYmN4bmdadlhEYnZOWUR3YmNHbVhRIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJkZWxldGU6YXJ0aXN0IiwiZGVsZXRlOnZpZGVvIiwicGF0Y2g6YXJ0aXN0IiwicGF0Y2g6dmlkZW8iLCJwb3N0OnZpZGVvIl19.bwjomRmWEnAMfgvgK0HcPNZZdjcbwAg-y5-9x74V1rqvFC3Xc72GmXUNrj2yEpHVgw531vQGcfZDzV1nU7N5njd1ruEa73FddlQ4yHHjfhTa2ellATlbw6uEByDunCU0kg2AFLb6vx058APqSYQGQCDXJZ5uPb8VmDN0j3hxJkVdhrW3PBuS_MGW8iPm9oMVzcmBlfROoLlT7u1ud1mJUn805BkEsH7JSIJG8bI5aQJr_3Kq5cmjmnPA331gtNGrAHldfnSWaPwMZ7YYHUU2QS1lZymS4u-70KcZxrUgo-VY54CcTVgJGaxVFBRlAXfsk1qR-3vJTw6FpxdR5Pqkpw'
         self.badfuckingtoken = 'bullshit'
 
         self.new_artist = {
@@ -62,8 +62,9 @@ class ArtistIoTest(unittest.TestCase):
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
+        del data['artists']['id']
         self.assertEqual(data['artists'], {
-                         'name': 'Charlie Brown', 'id': 1, 'age': 25, 'style': 'musician'})
+                         'name': 'Charlie Brown', 'age': 25, 'style': 'musician'})
 
     def test_get_artist(self):
         print('Testing to check if Artists exist: ')
@@ -84,7 +85,8 @@ class ArtistIoTest(unittest.TestCase):
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
-        self.assertEqual(data['videos'], {'title': 'Jazz Theory', 'id': 1,
+        del data['videos']['id']
+        self.assertEqual(data['videos'], {'title': 'Jazz Theory',
                                           'type': 'Stream', 'date': data['videos']['date']})
 
     def test_get_video(self):
@@ -93,88 +95,86 @@ class ArtistIoTest(unittest.TestCase):
         data = json.loads(res.data)
 
         videos = Video.query.order_by(Video.id).all()
-        output = [video.format() for video in videos]
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
-        self.assertEqual(data['videos'], output)
+        for video in videos:
+            v = next(v for v in data['videos'] if v['id'] == video.id)
+            self.assertEqual(v['title'], video.title)
+            self.assertEqual(v['type'], video.type)
 
     def test_get_artist_by_id(self):
         print('Testing to check on one artist in specific: ')
-        res = self.client().get('/artists/1')
+
+        artist = Artist.query.get(1)
+
+        res = self.client().get('/artists/' +str(artist.id))
         data = json.loads(res.data)
 
-        artist = Artist.query.get(self).first().id
-        output = artist.format()
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
-        self.assertEqual(data['artists'], output)
+        self.assertEqual(data['artists']['name'], artist.name)
 
     def test_patch_artist_w_token(self):
         print('Testing to Patch one Video in specific with Mod Token: ')
-        video = Video(name="")
-        video.insert()
+        artist = Artist(name="Jake Mesa", style="Disk Jockey", age="19")
+        artist.insert()
 
-        res = self.client().patch('/videos/',
-                                  headers={"Authorization": "Bearer {}".format(self.mod)}, json=self.new_video)
+        res = self.client().patch('/artists/' +str(artist.id),
+                                  headers={"Authorization": "Bearer {}".format(self.mod)}, json={"style": "magician"})
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
         self.assertTrue(data['success'])
-        self.assertEqual(data['video_id'], video.id)
+        self.assertEqual(data['artists']['style'], 'magician' )
 
     def test_patch_video_w_token(self):
         print('Testing to Patch one Artist in specific with Mod Token: ')
-        video = Video(name="")
+        video = Video(title="MagicMan", type="tutorial")
         video.insert()
 
-        res = self.client().patch('/videos/',
-                                  headers={"Authorization": "Bearer {}".format(self.mod)}, json=self.new_video)
+        res = self.client().patch('/videos/' + str(video.id),
+                                  headers={"Authorization": "Bearer {}".format(self.mod)}, json={"type": "livestream"})
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
         self.assertTrue(data['success'])
-        self.assertEqual(data['video_id'], video.id)
+        self.assertEqual(data['video']['type'], 'livestream')
 
     def test_delete_artist_w_token(self):
         print('Testing to Delete one artist in specific Mod Token: ')
-        artist = Artist(name="")
+        artist = Artist(name="Alex Grey", style="Artist", age="69")
         artist.insert()
 
-        res = self.client().delete('/artists/',
-                                   headers={"Authorization": "Bearer {}".format(self.mod)}, json=self.new_artist)
-        data = json.loads(res.data)
+        res = self.client().delete('/artists/' + str(artist.id),
+                                   headers={"Authorization": "Bearer {}".format(self.mod)})
+        deleted_artist = Artist.query.get(artist.id)
 
         self.assertEqual(res.status_code, 200)
-        self.assertTrue(data['success'])
-        self.assertEqual(data['artist_id'], artist.id)
+        self.assertEqual(deleted_artist, None)
 
     def test_delete_video_w_wrong_token(self):
         print('Testing to Delete one Video in specific with Artist Token: ')
-        video = Video(name="")
+        video = Video(title="The Giver", type="Movie")
         video.insert()
 
-        res = self.client().delete('/videos/1',
-                                   headers={"Authorization": "Bearer {}".format(self.artist)}, json=self.new_video)
-        data = json.loads(res.data)
+        res = self.client().delete('/videos/' +  str(video.id),
+                                   headers={"Authorization": "Bearer {}".format(self.artist)})
 
-        self.assertEqual(res.status_code, 404)
-        self.assertEqual(data['error'], 404)
-        self.assertFalse(data['success'])
+        self.assertEqual(res.status_code, 401)
 
     def test_delete_video_w_token(self):
         print('Testing to Delete one Video in specific with Mod Token: ')
-        video = Video(name="")
+        video = Video(title="The Giver", type="Movie")
         video.insert()
 
-        res = self.client().delete('/videos/q',
-                                   headers={"Authorization": "Bearer {}".format(self.mod)}, json=self.new_video)
+        res = self.client().delete('/videos/' + str(video.id),
+                                   headers={"Authorization": "Bearer {}".format(self.mod)})
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
         self.assertTrue(data['success'])
-        self.assertEqual(data['video_id'], video.id)
 
 
 if __name__ == "__main__":

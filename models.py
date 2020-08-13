@@ -23,6 +23,9 @@ setup_db(app)
     binds a flask application and a SQLAlchemy service
 '''
 
+def get_date():
+    date_to_use = datetime.datetime.utcnow()
+    return date_to_use
 
 def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
@@ -122,9 +125,6 @@ class Video(db.Model):
             "type": self.type
         }
     
-    def get_date():
-        date_to_use = datetime.datetime.utcnow()
-        return date_to_use
 
     def __repr__(self):
         return json.dumps(self.short())
